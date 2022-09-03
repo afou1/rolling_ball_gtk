@@ -11,14 +11,16 @@ void init_ball(Ball* ball){
 }
 
 
-int ball_is_on_platform(Platform* arr_platforms,int num,float ball_x,float ball_y,int width){
+int ball_is_on_platform(Platform* arr_platforms,int num,Ball* ball,int width){
 
     for(int i=0;i<num;i++){
         int plat_x=(arr_platforms+i)->pos_rect.x;
         int plat_y=(arr_platforms+i)->pos_rect.y;
 
         for(int j=0; j<width;j++){
-            if(ball_y==plat_y && ball_x==(plat_x+width)){
+            if(ball->pos_rect.y==plat_y && ball->pos_rect.x==(plat_x+width)){
+                ball->current_platform=arr_platforms+i;
+
                 return 1;
             }
         }
@@ -26,19 +28,37 @@ int ball_is_on_platform(Platform* arr_platforms,int num,float ball_x,float ball_
     return 0;
 }
 
+void move_left(Game *game){
+
+
+    game->ball.pos_rect.x-=game->ball.speed_x;
+
+};
+
+void move_right(Game *game){
+        game->ball.pos_rect.x+=game->ball.speed_x;
+
+
+};
+
+// void jump(){
+
+// }
+
 
 
 void update_pos_ball(Game *game,int on_plateform){
 
 
-    float gravity=-0.001;
-    static float speed_y;
-    static float speed_x=10;
+    float gravity=-0.005;
+    static float speed_y=5;
 
     if(on_plateform==0){
         speed_y+=gravity;
         game->ball.pos_rect.y += speed_y;
-    }
+    }else{
+        game->ball.pos_rect.y=game->ball.current_platform->pos_rect.y;
+    }//if the ball is on a platform, then it will take the y coordinate of the platform
 
         
 }
@@ -107,6 +127,7 @@ void render_ball(Ball* ball,SDL_Renderer* renderer){
         ball->ptr_texture=SDL_CreateTextureFromSurface(renderer, ball->ptr_surface);
     }
     SDL_RenderCopy(renderer, ball->ptr_texture, NULL,  &ball->pos_rect);
+
 }
 void init_state(Game *game){
     game->first_plat=0;
@@ -116,12 +137,13 @@ void init_state(Game *game){
 }
 
 void render_game(Game* game,SDL_Renderer* renderer){
-    render_platforms(game->platforms,renderer);
     render_ball(&game->ball,renderer);
+    render_platforms(game->platforms,renderer);
+    // render_ball(&game->ball,renderer);
 }
 
 void update_positions(Game* game){
     update_pos_platforms(game);
-    int bool_ball=ball_is_on_platform(game->platforms,NUM_PLATFORMS,game->ball.pos_rect.x,game->ball.pos_rect.y,PLATFORM_WIDTH);
+    int bool_ball=ball_is_on_platform(game->platforms,NUM_PLATFORMS,&game->ball,PLATFORM_WIDTH);
     update_pos_ball(game,bool_ball);
 }

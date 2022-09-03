@@ -1,12 +1,5 @@
 #include "game.h"
 
-// void swap(int *xp, int *yp)
-// {
-//     int temp = *xp;
-//     *xp = *yp;
-//     *yp = temp;
-// }
-
 
 
 int main(int argc, char *argv[])
@@ -51,11 +44,13 @@ int main(int argc, char *argv[])
                             break;
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_LEFT:
+                            move_left(&game);
                             // appelle a update_pos_ball
 
                             break;
                         case SDL_SCANCODE_D:
                         case SDL_SCANCODE_RIGHT:
+                            move_right(&game);
                             // appelle a update_pos_ball
 
                             break;
@@ -67,7 +62,8 @@ int main(int argc, char *argv[])
 
 
 
-        update_pos_platforms(&game);
+        // update_pos_platforms(&game);
+        update_positions(&game);
         SDL_RenderClear(rend);
         SDL_SetRenderDrawColor(rend,53,81,92,0);
         render_game(&game,rend);
