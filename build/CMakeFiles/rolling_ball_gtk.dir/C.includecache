@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/moustaph/Projects/game_proj/rolling_ball_gtk/game.h
+stdio.h
+-
+SDL2/SDL.h
+-
+SDL2/SDL_image.h
+-
+SDL2/SDL_timer.h
+-
+
+/home/moustaph/Projects/game_proj/rolling_ball_gtk/main.c
+game.h
+/home/moustaph/Projects/game_proj/rolling_ball_gtk/game.h
+

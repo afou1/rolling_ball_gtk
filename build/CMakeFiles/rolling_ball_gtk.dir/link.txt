@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/rolling_ball_gtk.dir/main.c.o CMakeFiles/rolling_ball_gtk.dir/game.c.o  -o rolling_ball_gtk  -lSDL2 -lSDL2_image -lSDL2 

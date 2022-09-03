@@ -1,0 +1,3 @@
+/home/moustaph/Projects/game_proj/rolling_ball_gtk/build/CMakeFiles/rebuild_cache.dir
+/home/moustaph/Projects/game_proj/rolling_ball_gtk/build/CMakeFiles/edit_cache.dir
+/home/moustaph/Projects/game_proj/rolling_ball_gtk/build/CMakeFiles/rolling_ball_gtk.dir
