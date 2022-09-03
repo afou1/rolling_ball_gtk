@@ -37,35 +37,26 @@ int main(int argc, char *argv[])
 
     while (!close) {
         SDL_Event event;
-
-    
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
 
                 case SDL_QUIT:
-
                     close = 1;
                     break;
-
                 case SDL_KEYDOWN:
-
                     switch (event.key.keysym.scancode) {
                         case SDL_SCANCODE_W:
                         case SDL_SCANCODE_UP:
-
+                            // appelle a update_pos_ball
                             break;
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_LEFT:
-
-                            Zdest.x+=speed_x;
-
-                            break;
-                        case SDL_SCANCODE_S:
-                        case SDL_SCANCODE_DOWN:
+                            // appelle a update_pos_ball
 
                             break;
                         case SDL_SCANCODE_D:
                         case SDL_SCANCODE_RIGHT:
+                            // appelle a update_pos_ball
 
                             break;
                         default:

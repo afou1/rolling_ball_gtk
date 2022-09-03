@@ -29,6 +29,10 @@ typedef struct Platform{
 
 typedef struct Ball{
     SDL_Rect pos_rect;
+    int speed_x;
+    int speed_y;
+    SDL_Surface *ptr_surface;
+    SDL_Texture *ptr_texture;
 
 } Ball;
 
@@ -36,11 +40,11 @@ typedef struct Game{
     int first_plat;
     int last_plat;
     Platform platforms[NUM_PLATFORMS];
-    Ball* ball;
+    Ball ball;
 
 } Game;
 
-void init_platforms(Platform *arr_platforms);
+void init_platforms(Platform *arr_platforms,Ball ball);
 void init_state(Game *game);
 void update_pos_platforms(Game *game);
 void render_platforms(Platform *arr_platforms,SDL_Renderer* renderer);
