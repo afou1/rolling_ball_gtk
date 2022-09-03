@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_LEFT:
 
+                            Zdest.x+=speed_x;
+
                             break;
                         case SDL_SCANCODE_S:
                         case SDL_SCANCODE_DOWN:
