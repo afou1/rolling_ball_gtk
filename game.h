@@ -2,14 +2,29 @@
 #define ROLLING_BALL_GTK_GAME_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include <time.h>
 
 
+#define NUM_PLATFORMS 10
+#define PLATFORM_WIDTH 200
+#define PLATFORM_HEIGHT 50
+#define PLATFORM_SPEED 3
+
+#define BALL_HEIGHT 30
+#define BALL_WIDTH 30
+
+#define WINDOW_HEIGHT 1000
+#define WINDOW_WIDTH 1000
 
 typedef struct Platform{
     SDL_Rect pos_rect;
+    int pixel_speed;
+    SDL_Surface *ptr_surface;
+    SDL_Texture *ptr_texture;
 } Platform;
 
 typedef struct Ball{
@@ -18,12 +33,17 @@ typedef struct Ball{
 } Ball;
 
 typedef struct Game{
-
+    int first_plat;
+    int last_plat;
+    Platform platforms[NUM_PLATFORMS];
+    Ball* ball;
 
 } Game;
 
-
-Game* init_state();
+void init_platforms(Platform *arr_platforms);
+void init_state(Game *game);
+void update_pos_platforms(Game *game);
+void render_platforms(Platform *arr_platforms,SDL_Renderer* renderer);
 void render_game(Game* game,SDL_Renderer* renderer);
 
 #endif //ROLLING_BALL_GTK_GAME_H
