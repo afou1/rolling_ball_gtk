@@ -18,10 +18,18 @@ typedef struct Ball{
 } Ball;
 
 typedef struct Game{
+    
+    static num_platform=0;
 
+    Platform *platforms[10];
+
+    Ball* ball;
 
 } Game;
 
+int is_on_platform(*Platform platforms,int num,float ball_x,float ball_y,int width);
+
+// void moving_ball();
 
 Game* init_state();
 void render_game(Game* game,SDL_Renderer* renderer);
