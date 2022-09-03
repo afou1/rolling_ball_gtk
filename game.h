@@ -18,10 +18,17 @@ typedef struct Ball{
 } Ball;
 
 typedef struct Game{
+    int num_platform=0;
+    Platform *platforms[10];
 
+    Ball* ball;
 
 } Game;
 
+void move_ball(){
+    float gravity=9;
+
+}
 
 Game* init_state();
 void render_game(Game* game,SDL_Renderer* renderer);

@@ -1,5 +1,14 @@
 #include "game.h"
 
+// void swap(int *xp, int *yp)
+// {
+//     int temp = *xp;
+//     *xp = *yp;
+//     *yp = temp;
+// }
+
+
+
 int main(int argc, char *argv[])
 {
 
@@ -10,15 +19,15 @@ int main(int argc, char *argv[])
     SDL_Window* win = SDL_CreateWindow("GAME",
                                        SDL_WINDOWPOS_CENTERED,
                                        SDL_WINDOWPOS_CENTERED,
-                                       1000, 1000, 0);
+                                       1000, 1000, 0);//create the window 
     Uint32 render_flags = SDL_RENDERER_ACCELERATED;
     SDL_Renderer* rend = SDL_CreateRenderer(win, -1, render_flags);
     SDL_Surface* surface_ball;
     SDL_Surface* surface_platform;
     int imgFlags = IMG_INIT_JPG|IMG_INIT_PNG;
     int flg= IMG_Init(imgFlags);
-    surface_ball = IMG_Load("/home/afou/The_projects/random_c/rolling_ball_gtk/ball.png");
-    surface_platform = IMG_Load("/home/afou/The_projects/random_c/rolling_ball_gtk/platform.png");
+    surface_ball = IMG_Load("../ball.png");
+    surface_platform = IMG_Load("../platform.png");
 
     SDL_Texture* tex_ball = SDL_CreateTextureFromSurface(rend, surface_ball);
     SDL_Texture* tex_platform = SDL_CreateTextureFromSurface(rend, surface_platform);
@@ -27,8 +36,8 @@ int main(int argc, char *argv[])
 
 
     printf("IMG_Load: %s %d %d\n", IMG_GetError(),imgFlags,flg);
-    SDL_QueryTexture(tex_ball, NULL, NULL, &dest.w, &dest.h);
-    SDL_QueryTexture(tex_platform, NULL, NULL, &rect_platform.w, &rect_platform.h);
+    //SDL_QueryTexture(tex_ball, NULL, NULL, &dest.w, &dest.h);
+    //SDL_QueryTexture(tex_platform, NULL, NULL, &rect_platform.w, &rect_platform.h);
     dest.w = 30;
     dest.h = 30;
 
@@ -48,7 +57,7 @@ int main(int argc, char *argv[])
     while (!close) {
         SDL_Event event;
 
-
+    
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
 
@@ -63,6 +72,10 @@ int main(int argc, char *argv[])
                         case SDL_SCANCODE_W:
                         case SDL_SCANCODE_UP:
                             dest.y -= speed / 30;
+                            //teleportation 
+                            // swap(&dest.x,&rect_platform.x);
+                            // swap(&dest.y,&rect_platform.y);
+
                             break;
                         case SDL_SCANCODE_A:
                         case SDL_SCANCODE_LEFT:
