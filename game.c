@@ -16,8 +16,6 @@ void init_platforms(Platform *arr_platforms){
     }
     arr_platforms[0].pos_rect.x=(WINDOW_WIDTH-PLATFORM_WIDTH)/2;
     arr_platforms[0].pos_rect.y=(WINDOW_HEIGHT+BALL_HEIGHT)/2;
-    arr_platforms[1].pos_rect.x=10;
-    arr_platforms[1].pos_rect.y=10;
 }
 
 int get_valid_x(int old_w){
