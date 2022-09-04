@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
 
 
-        // update_pos_platforms(&game);
+
         update_positions(&game);
         SDL_RenderClear(rend);
         SDL_SetRenderDrawColor(rend,53,81,92,0);
