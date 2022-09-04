@@ -23,6 +23,7 @@
 
 typedef struct Platform{
     SDL_Rect pos_rect;
+    int pixel_speed;
     SDL_Surface *ptr_surface;
     SDL_Texture *ptr_texture;
 } Platform;

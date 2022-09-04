@@ -93,7 +93,7 @@ void update_pos_platforms(Game *game){
     int new_y=0,new_x=0;
     for (int i=0;i<NUM_PLATFORMS;i++){
         if(arr_platforms[i].pos_rect.y>0 && arr_platforms[i].pos_rect.x>0){
-            new_y=arr_platforms[i].pos_rect.y-PLATFORM_SPEED;
+            new_y=arr_platforms[i].pos_rect.y-arr_platforms[i].pixel_speed;
             if (new_y<0){
                 arr_platforms[i].pos_rect.y=-1;
                 arr_platforms[i].pos_rect.x=-1;
