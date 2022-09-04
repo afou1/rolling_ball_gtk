@@ -24,40 +24,42 @@ int main(int argc, char *argv[])
     init_state(&game);
 
     int close = 0;
-
+    //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
 
     int speed = 300;
 
     while (!close) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
-            switch (event.type) {
 
-                case SDL_QUIT:
-                    close = 1;
-                    break;
-                case SDL_KEYDOWN:
-                    switch (event.key.keysym.scancode) {
-                        case SDL_SCANCODE_W:
-                        case SDL_SCANCODE_UP:
-                            // appelle a update_pos_ball
-                            break;
-                        case SDL_SCANCODE_A:
-                        case SDL_SCANCODE_LEFT:
-                            move_left(&game);
-                            // appelle a update_pos_ball
-
-                            break;
-                        case SDL_SCANCODE_D:
-                        case SDL_SCANCODE_RIGHT:
-                            move_right(&game);
-                            // appelle a update_pos_ball
-
-                            break;
-                        default:
-                            break;
-                    }
+            if(event.type==SDL_QUIT){
+                close = 1;
+                break;
             }
+            else if(event.type==SDL_KEYDOWN ||event.key.repeat==1){
+                switch (event.key.keysym.scancode) {
+                    case SDL_SCANCODE_W:
+                    case SDL_SCANCODE_UP:
+                        // appelle a update_pos_ball
+                        break;
+                    case SDL_SCANCODE_A:
+                    case SDL_SCANCODE_LEFT:
+                        move_left(&game);
+                        // appelle a update_pos_ball
+
+                        break;
+                    case SDL_SCANCODE_D:
+                    case SDL_SCANCODE_RIGHT:
+                        move_right(&game);
+                        // appelle a update_pos_ball
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
         }
 
 

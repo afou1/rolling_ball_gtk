@@ -9,6 +9,7 @@ void init_ball(Ball* ball){
     ball->pos_rect.y=WINDOW_HEIGHT/2;
     ball->pos_rect.w=BALL_WIDTH;
     ball->pos_rect.h=BALL_HEIGHT;
+    ball->speed_x=5;
 
 }
 
@@ -32,16 +33,11 @@ int ball_is_on_platform(Platform* arr_platforms,int num,Ball* ball,int width){
 }
 
 void move_left(Game *game){
-
-
     game->ball.pos_rect.x-=game->ball.speed_x;
-
 };
 
 void move_right(Game *game){
         game->ball.pos_rect.x+=game->ball.speed_x;
-
-
 };
 
 // void jump(){
