@@ -9,27 +9,52 @@ void init_ball(Ball* ball){
     ball->pos_rect.y=WINDOW_HEIGHT/2;
     ball->pos_rect.w=BALL_WIDTH;
     ball->pos_rect.h=BALL_HEIGHT;
-    ball->speed_x=5;
+    ball->speed_x=10;
 
 }
 
 
-int ball_is_on_platform(Platform* arr_platforms,int num,Ball* ball,int width){
+void handle_edges(Game *game){
 
-    for(int i=0;i<num;i++){
+    if ( game->ball.pos_rect.x+ game->ball.pos_rect.w> WINDOW_WIDTH)
+            game->ball.pos_rect.x= WINDOW_WIDTH - game->ball.pos_rect.w;
+
+
+        if ( game->ball.pos_rect.x< 0)
+            game->ball.pos_rect.x= 0;
+
+
+        if (game->ball.pos_rect.y + game->ball.pos_rect.h > WINDOW_HEIGHT)
+            game->ball.pos_rect.y= WINDOW_HEIGHT - game->ball.pos_rect.h;
+
+        if (game->ball.pos_rect.y < 0)
+            game->ball.pos_rect.y = 0;
+}
+
+
+void ball_is_on_platform(Game* game){
+
+    Ball *ball=&game->ball;
+    Platform *arr_platforms=game->platforms;
+    
+
+
+
+    for(int i=0;i<NUM_PLATFORMS;i++){
         int plat_x=(arr_platforms+i)->pos_rect.x;
         int plat_y=(arr_platforms+i)->pos_rect.y;
 
-        for(int j=0; j<width;j++){
-            //if(ball->pos_rect.y==plat_y && ball->pos_rect.x==(plat_x+width)){
-            if(ball->pos_rect.y+BALL_HEIGHT==plat_y && ball->pos_rect.x>=plat_x && ball->pos_rect.x<=(plat_x+PLATFORM_WIDTH-BALL_WIDTH)){
-                ball->current_platform=arr_platforms+i;
 
-                return 1;
-            }
+        if(ball->pos_rect.y+BALL_HEIGHT==plat_y){
+            if(ball->pos_rect.x>=plat_x && ball->pos_rect.x<=(plat_x+PLATFORM_WIDTH-BALL_WIDTH)){
+                ball->current_platform=arr_platforms+i;
+                ball->on_platform=1;
+                return;
+                // return 1;
+        }
         }
     }
-    return 0;
+    ball->on_platform=0;;
 }
 
 void move_left(Game *game){
@@ -37,26 +62,45 @@ void move_left(Game *game){
 };
 
 void move_right(Game *game){
-        game->ball.pos_rect.x+=game->ball.speed_x;
+    game->ball.pos_rect.x+=game->ball.speed_x;
 };
 
-// void jump(){
-
-// }
-
-
-
-void update_pos_ball(Game *game,int on_plateform){
+void jump(Game* game){
+    game->ball.jump_force=20;
+    game->ball.bool_jump=1;
+}
 
 
-    float gravity=-0.005;
-    static float speed_y=5;
 
-    if(on_plateform==0){
-        speed_y+=gravity;
+void update_pos_ball(Game *game){
+    
+    ball_is_on_platform(game);
+
+
+    float gravity=0.05;
+    float speed_y=5;
+
+    if(game->ball.on_platform==0){
+        speed_y+=gravity-game->ball.jump_force;
+    
         game->ball.pos_rect.y += speed_y;
+        if(game->ball.jump_force!=0){
+            game->ball.jump_force-=1;
+
+        }else{
+            game->ball.bool_jump=0;
+        }
     }else{
+  
         game->ball.pos_rect.y=game->ball.current_platform->pos_rect.y-BALL_HEIGHT;
+        if(game->ball.bool_jump){
+                    
+        speed_y+=gravity-game->ball.jump_force;
+    
+        game->ball.pos_rect.y += speed_y;
+
+        }
+
     }//if the ball is on a platform, then it will take the y coordinate of the platform
 
         
@@ -142,9 +186,13 @@ void render_game(Game* game,SDL_Renderer* renderer){
 }
 
 int is_coliding(Platform p, Ball b){
-    if (p.pos_rect.y<(b.pos_rect.y+BALL_HEIGHT) && b.pos_rect.x>=p.pos_rect.x && b.pos_rect.x<=(p.pos_rect.x+PLATFORM_WIDTH-BALL_WIDTH)){
-        return 1;
-    }
+    // if (p.pos_rect.y<(b.pos_rect.y+BALL_HEIGHT) && b.pos_rect.x>=p.pos_rect.x && b.pos_rect.x<=(p.pos_rect.x+PLATFORM_WIDTH-BALL_WIDTH)){
+    //     return 1;
+    // }
+    if (p.pos_rect.y<(b.pos_rect.y+BALL_HEIGHT)  && p.pos_rect.y>(b.pos_rect.y+BALL_HEIGHT/5) &&
+           b.pos_rect.x+BALL_WIDTH/2>=p.pos_rect.x && b.pos_rect.x<=(p.pos_rect.x+PLATFORM_WIDTH-BALL_WIDTH/5)){
+            return 1;
+           }
     return 0;
 }
 
@@ -161,6 +209,6 @@ void proc_collisions_platforms(Game* game){
 void update_positions(Game* game){
     update_pos_platforms(game);
     proc_collisions_platforms(game);
-    int bool_ball=ball_is_on_platform(game->platforms,NUM_PLATFORMS,&game->ball,PLATFORM_WIDTH);
-    update_pos_ball(game,bool_ball);
+    // ball_is_on_platform(game->platforms,NUM_PLATFORMS,&game->ball);
+    update_pos_ball(game);
 }

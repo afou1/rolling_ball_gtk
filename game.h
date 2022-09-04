@@ -32,6 +32,9 @@ typedef struct Ball{
     SDL_Rect pos_rect;
     int speed_x;
     int speed_y;
+    int jump_force;
+    int bool_jump;
+    int on_platform;
     Platform* current_platform;
     SDL_Surface *ptr_surface;
     SDL_Texture *ptr_texture;
@@ -54,4 +57,6 @@ void render_platforms(Platform *arr_platforms,SDL_Renderer* renderer);
 void render_game(Game* game,SDL_Renderer* renderer);
 void move_left(Game* game);
 void move_right(Game* game);
+void handle_edges(Game *game);
+void jump(Game* game);
 #endif //ROLLING_BALL_GTK_GAME_H
